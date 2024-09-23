@@ -5,6 +5,11 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
+// http://localhost:5000/api/auth/logout
+// http://localhost:5000/api/auth/register
+// http://localhost:5000/api/auth/login
+
+// register a new user
 router.post("/register", async (req, res) => {
   try {
     const { username, password, email } = req.body;
@@ -21,6 +26,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// login a user
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -43,6 +49,7 @@ router.post("/login", async (req, res) => {
     }
 }   );
 
+// logout a user
 router.post("/logout", (req, res) => { 
     try {
         res.clearCookie("token");

@@ -13,6 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
+
 app.use('/api/auth', router);
 app.use('/api/hall', hallrouter);
 app.use('/api/movie', movierouter);
