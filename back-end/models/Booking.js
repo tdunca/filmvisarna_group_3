@@ -16,10 +16,18 @@ const bookingSchema = new mongoose.Schema({
         ref: 'Hall',
         required: true,
     },
-    showtime: {
-        type: String,
-        required: true,
-    },
+    bookedAt: [
+        {
+            date: {
+                type: Date,
+                required: true,
+            },
+            time: {
+                type: String,
+                required: true,
+            },
+        }
+    ],
     seats: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Seat',
