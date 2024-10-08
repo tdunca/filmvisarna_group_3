@@ -9,17 +9,38 @@ const movieSchema = new mongoose.Schema({
         type: Number, // 2021
         required: true,
     },
-    showtimes: {
-        type: [String], // ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"]
+    length: {
+        type: Number, // 120
         required: true,
     },
-    hall:{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Hall',
+    description: {
+        type: String,
         required: true,
     },
-    rating: {
-        type: Number,
+    genre: {
+        type: [String],
+        required: true,
+        default: [],
+    },
+    distributor: {
+        type: String,
+        required: true,
+    },
+    productionCountries: {
+        type: [String],
+        required: true,
+        default: [],
+    },
+    language: {
+        type: String,
+        required: true,
+    },
+    subtitles: {
+        type: String,
+        required: true,
+    },
+    director: {
+        type: String,
         required: true,
     },
     actors: {
@@ -32,10 +53,15 @@ const movieSchema = new mongoose.Schema({
         required: true,
         default: "https://res.cloudinary.com/dkccaruot/image/upload/v1722965887/oyswfgmlb5olqisiazsg.png",
     },
+    productionCountries: {
+        type: [String],
+        required: true,
+        default: [],
+    },
     trailer: {
         type: String,
         required: true,
-        default: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        default: "dQw4w9WgXcQ",
     },
 }, { timestamps: true });
 
