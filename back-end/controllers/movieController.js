@@ -1,10 +1,10 @@
 import Movie from "../models/Movie.js";
-import Hall from "../models/Hall.js";
-import Showtime from "../models/Showtime.js";
+// import Hall from "../models/Hall.js";
+// import Showtime from "../models/Showtime.js";
 
 export const createMovie = async (req, res) => {
     try {
-    const { title, year, length, description, genre, distributor, language, subtitles, director, actors, poster, trailer } = req.body;
+    const { title, year, length, description, genre, distributor, language, subtitles, productionCountries, director, actors, poster, trailer } = req.body;
 
     const movie = new Movie({
       title,
@@ -15,6 +15,7 @@ export const createMovie = async (req, res) => {
       distributor,
       language,
       subtitles,
+      productionCountries,
       director,
       actors,
       poster,
