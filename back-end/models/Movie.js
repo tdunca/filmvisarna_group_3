@@ -26,7 +26,7 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    languange: {
+    language: {
         type: String,
         required: true,
     },
@@ -47,6 +47,11 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: "https://res.cloudinary.com/dkccaruot/image/upload/v1722965887/oyswfgmlb5olqisiazsg.png",
+    },
+    productionCountries: {
+        type: [String],
+        required: true,
+        default: [],
     },
     trailer: {
         type: String,
