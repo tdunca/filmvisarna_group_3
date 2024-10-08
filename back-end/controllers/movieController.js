@@ -1,6 +1,4 @@
 import Movie from "../models/Movie.js";
-// import Hall from "../models/Hall.js";
-// import Showtime from "../models/Showtime.js";
 
 export const createMovie = async (req, res) => {
     try {
@@ -37,33 +35,6 @@ export const getMovies = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-// Not needed anymore since showtimes and hall is not included in movie object
-  // export const getMoviesByDate = async (req, res) => {
-  //   const { selectedDate } = req.query;
-  
-  //   try {
-  //     const date = new Date(selectedDate);
-  
-  //     // Find showtimes for the selected date
-  //     const showtimes = await Showtime.find({ date })
-  //       .populate('movie') // Populate movie details
-  //       .populate('hall');  // Optionally populate hall details
-  
-  //     if (!showtimes.length) {
-  //       return res.status(404).json({ message: 'No movies found for the selected date' });
-  //     }
-  
-  //     // Extract unique movies from the showtimes
-  //     const movies = showtimes.map(showtime => showtime.movie);
-  //     // populate the hall for each movie
-  //     await Movie.populate(movies, { path: 'hall' });
-  //     res.json({ movies });
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ error: 'Server error' });
-  //   }
-  // }
 
 export const getMovieById = async (req, res) => {
   try {
