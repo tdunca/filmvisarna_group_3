@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Booking from '../../pages/Booking/Booking';
-import Home from '../../pages/Home/Home';
-import MovieInfo from '../../pages/MovieInfo/MovieInfo';
+import Booking from '../../views/pages/Booking/Booking';
+import Home from '../../views/pages/Home/Home';
+import MovieInfo from '../../views/pages/MovieInfo/MovieInfo';
 import './Main.css';
 
 const Main: React.FC = () => {
