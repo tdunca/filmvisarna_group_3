@@ -1,0 +1,6 @@
+.movie-item-test {
+  width: 100px;
+  height: 100px;
+  background: purple;
+  object-fit: cover;
+}
