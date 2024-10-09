@@ -7,15 +7,14 @@ import Main from './layout/Main/Main'
 
 const App: React.FC = () => {
 
-
   return (
-    <>
+    <div className='app'>
       <Router>
         <Header />
         <Main />
         <Footer />
       </Router>
-    </>
+    </div>
   );
 };
 

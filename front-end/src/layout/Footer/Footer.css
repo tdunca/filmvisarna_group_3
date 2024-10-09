@@ -1,5 +1,13 @@
 footer {
   width: 100%;
-  height: 100px;
+  height: 300px;
   background: red;
+}
+
+.site-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-left: 20px;
 }
