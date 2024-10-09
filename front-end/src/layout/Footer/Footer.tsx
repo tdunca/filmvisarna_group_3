@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
       </div>
       <div className="opening-hours"></div>
       <div className="address"></div>
-      <div className="logo"></div>
+      <div className="logo-footer"></div>
       <div className="copyright"></div>
       <div className="social-media-links"></div>
     </footer>
