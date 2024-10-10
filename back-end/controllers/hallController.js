@@ -4,35 +4,40 @@ import Seat from "../models/Seat.js";
 import Showtime from "../models/Showtime.js";
 
 export const createHall = async (req, res) => {
-    try {
-      const { hallNumber, seatQuantity } = req.body;
-      const hallExists = await Hall.findOne({ hallNumber });
-      if (hallExists) {
-        return res.status(400).json({ error: "Hall already exists" });
-      }
-      if (seatQuantity > 40) {
-        return res.status(400).json({ error: "Seat quantity exceeds limit" });
-      }
-      if (!hallNumber || !seatQuantity) {
-        return res.status(400).json({ error: "Missing fields" });
-      }
-      const hallSeats = [];
-      for (let i = 0; i < seatQuantity; i++) {
-        const seat = new Seat({ seatNumber: `H${hallNumber}S${ i + 1 }` });
-        await seat.save();
-        hallSeats.push(seat._id);
-      }
-      const hall = new Hall({ hallNumber, seats: hallSeats });
-      await hall.save();
-      res.status(200).json({ message: "Hall created successfully", hall });
-    } catch (error) {
-      res.status(500).json({ error: "Server error" });
-    }
-  }
+  try {
+    const { hallName, hallNumber, seatsPerRow } = req.body;
 
+    // Check if the hall already exists
+    const hallExists = await Hall.findOne({ hallName, hallNumber }).exec();
+    if (hallExists) {
+      return res.status(400).json({ error: "Hall already exists" });
+    }
+
+    // Create a new hall
+    const hall = new Hall({ hallName, hallNumber, seatsPerRow });
+    await hall.save();
+
+    // Create seats for the hall
+    const seats = [];
+    for (let i = 0; i < seatsPerRow.length; i++) {
+      for (let j = 0; j < seatsPerRow[i]; j++) {
+        const seat = new Seat({ seatNumber: j + 1, rowNumber: i + 1, hall: hall._id });
+        seats.push(seat);
+      }
+    }
+
+    // Insert all seats into the Seat collection
+    await Seat.insertMany(seats);
+
+    res.status(200).json({ message: "Hall created successfully", hall });
+  } catch (error) {
+    console.error('Error creating hall:', error); // Log the error for debugging
+    res.status(500).json({ error: "Server error" });
+  }
+};
 export const getHalls = async (req, res) => {
     try {
-      const halls = await Hall.find().populate("seats").exec();
+      const halls = await Hall.find();
       res.status(200).json(halls);
     } catch (error) {
       res.status(500).json({ error: "Server error" });
@@ -41,7 +46,7 @@ export const getHalls = async (req, res) => {
 
 export const getHallById = async (req, res) => {
     try {
-      const hall = await Hall.findById(req.params.id).populate("seats").exec();
+      const hall = await Hall.findById(req.params.id);
       if (!hall) {
         return res.status(404).json({ error: "Hall not found" });
       }
@@ -66,7 +71,6 @@ export const deleteHalls = async (req, res) => {
       Promise.all([
         Hall.deleteMany(),
         Seat.deleteMany(),
-        Showtime.deleteMany(),
       ]);
       res.status(200).json({ message: "All halls deleted successfully" });
     } catch (error) {
