@@ -5,13 +5,13 @@ const seatSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    rowNumber: {
+        type: Number,
+        required: true,
+    },
     hall: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hall',
-    },
-    isBooked: {
-        type: Boolean,
-        default: false,
     },
 }, { timestamps: true });
 
