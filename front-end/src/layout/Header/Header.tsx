@@ -3,69 +3,52 @@ import './Header.css';
 import Logo from '../../components/Logo/Logo';
 import Button from '@mui/material/Button';
 import SearchIcon from '../../assets/icons/search_35dp_FCAF00_FILL0_wght400_GRAD0_opsz40.png';
-import LoginIcon from '../../assets/icons/person_35dp_FCAF00_FILL0_wght400_GRAD0_opsz40.png'
+import LoginIcon from '../../assets/icons/person_35dp_FCAF00_FILL0_wght400_GRAD0_opsz40.png';
+
+const buttonStyles = {
+  height: '80px',
+  width: '80px',
+  border: 'none',
+  color: '#fcaf00',
+};
+
+const CustomButton = ({
+  label,
+  iconSrc,
+  sxOverrides = {},
+  borderDirection = 'right', // Default border to right, can be changed
+}: {
+  label?: string;
+  iconSrc?: string;
+  sxOverrides?: object;
+  borderDirection?: 'right' | 'left';
+}) => (
+  <Button
+    variant="outlined"
+    sx={{
+      ...buttonStyles,
+      [`border${borderDirection.charAt(0).toUpperCase() + borderDirection.slice(1)}`]: '2px solid #fcaf00', // Dynamic border direction
+      ...sxOverrides, // Override styles if needed
+    }}
+  >
+    {iconSrc ? <img src={iconSrc} alt={label} style={{ height: '40px', width: '40px' }} /> : label}
+  </Button>
+);
 
 const Header: React.FC = () => {
   return (
     <header>
       <div className="schedule-button-container">
-        <Button
-          variant="outlined"
-          sx={{
-            height: '80px',
-            width: '80px',
-            border: 'none', 
-            borderRight: '2px solid #fcaf00',
-            color: '#fcaf00',
-          }}
-        >Idag</Button>
-        <Button
-          variant="outlined"
-          sx={{
-            height: '80px',
-            width: '80px',
-            border: 'none', 
-            borderRight: '2px solid #fcaf00',
-            color: '#fcaf00',
-          }}
-        >Imorgon</Button>
-        <Button
-          variant="outlined"
-          sx={{
-            height: '80px',
-            width: '80px',
-            border: 'none', 
-            borderRight: '2px solid #fcaf00',
-            color: '#fcaf00',
-          }}
-        >Senare</Button>
+        <CustomButton label="Idag" />
+        <CustomButton label="Imorgon" />
+        <CustomButton label="Senare" />
       </div>
       <div className='logo-container'>
         <Logo />
       </div>
       <div className="search-login-container">
-        <Button
-          variant="outlined"
-          sx={{
-            height: '80px',
-            width: '80px',
-            border: 'none', 
-            borderLeft: '2px solid #fcaf00',
-            color: '#fcaf00',
-          }}
-        ><img src={SearchIcon} alt="Search" style={{ height: '40px', width: '40px' }} /></Button>
-        <Button
-          variant="outlined"
-          sx={{
-            height: '80px',
-            width: '80px',
-            border: 'none', 
-            borderLeft: '2px solid #fcaf00',
-            color: '#fcaf00',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        ><img src={LoginIcon} alt="Search" style={{ height: '40px', width: '40px'}}/>Login</Button>
+        <CustomButton iconSrc={SearchIcon} borderDirection="left" />
+        <CustomButton label="Login" iconSrc={LoginIcon} borderDirection="left" sxOverrides={{ flexDirection: 'column' }} />
       </div>
     </header>
   );
