@@ -5,11 +5,13 @@ const hallSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    seats: {
-        type: [mongoose.Schema.Types.ObjectId],
+    hallName: {
+        type: String,
         required: true,
-        length: 40,
-        ref: 'Seat',
+    },
+    seatsPerRow: {
+        type: [Number],
+        required: true,
     },
 }, { timestamps: true });
 
