@@ -53,11 +53,6 @@ const movieSchema = new mongoose.Schema({
         required: true,
         default: "https://res.cloudinary.com/dkccaruot/image/upload/v1722965887/oyswfgmlb5olqisiazsg.png",
     },
-    productionCountries: {
-        type: [String],
-        required: true,
-        default: [],
-    },
     trailer: {
         type: String,
         required: true,
