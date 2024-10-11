@@ -17,14 +17,38 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+const TICKET_PRICES = {
+  adult: 140,
+  senior: 120,
+  child: 80
+};
+
 export const createBooking = async (req, res) => {
   try {
-    const { movieId, hallId, showtimeId, selectedSeats, email } = req.body;
+    const { movieId, hallId, showtimeId, selectedSeats, email, tickets } = req.body;
 
     // Validate input
-    if (!movieId || !hallId || !showtimeId || !selectedSeats || !email) {
+    if (!movieId || !hallId || !showtimeId || !selectedSeats || !email || !tickets) {
       return res.status(400).json({ error: 'Missing required booking information' });
     }
+
+     // Validate tickets
+    const totalSeatsFromTickets = tickets.reduce((sum, ticket) => sum + ticket.quantity, 0);
+    if (totalSeatsFromTickets !== selectedSeats.length) {
+      return res.status(400).json({ error: 'Number of tickets does not match number of selected seats' });
+    }
+
+    // Calculate total amount
+    const totalAmount = tickets.reduce((sum, ticket) => {
+      return sum + (TICKET_PRICES[ticket.type] * ticket.quantity);
+    }, 0);
+
+    // Process tickets with prices
+    const processedTickets = tickets.map(ticket => ({
+      type: ticket.type,
+      quantity: ticket.quantity,
+      price: TICKET_PRICES[ticket.type]
+    }));
 
     // Find or create user
     let user = await User.findOne({ email });
@@ -82,6 +106,8 @@ export const createBooking = async (req, res) => {
         time: showtime.time
       }],
       seats: selectedSeats,
+      tickets: processedTickets,
+      totalAmount,
       bookingNumber
     });
 
@@ -127,6 +153,10 @@ const generateBookingEmail = async (booking, showtime, user) => {
   const hall = await Hall.findById(booking.hall);
   const seats = await Seat.find({ _id: { $in: booking.seats } });
 
+  const ticketDetails = booking.tickets.map(ticket => 
+        `${ticket.quantity}x ${ticket.type.charAt(0).toUpperCase() + ticket.type.slice(1)} (${ticket.price} kr each)`
+  ).join('<br>');
+  
   return `
     <h2>Booking Confirmation</h2>
     <p>Booking Number: ${booking.bookingNumber}</p>
@@ -136,6 +166,10 @@ const generateBookingEmail = async (booking, showtime, user) => {
     <p>Hall: ${hall.hallName}</p>
     <p>Seats: ${seats.map(seat => `Row ${seat.rowNumber} Seat ${seat.seatNumber}`).join(', ')}</p>
     <p>Total Seats: ${seats.length}</p>
+    <hr>
+    <h3>Tickets:</h3>
+    <p>${ticketDetails}</p>
+    <p>Total Amount: ${booking.totalAmount} kr</p>
     <hr>
     <p>Please arrive at least 15 minutes before the show.</p>
     <p>Your booking can be viewed online using your email and booking number.</p>

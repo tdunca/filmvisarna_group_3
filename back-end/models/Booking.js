@@ -1,5 +1,21 @@
 import mongoose from "mongoose";
 
+const ticketSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['adult', 'senior', 'child'],
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    }
+});
+
 const bookingSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -32,6 +48,11 @@ const bookingSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Seat',
         required: true,
+    },
+    tickets: [ticketSchema],
+    totalAmount: {
+        type: Number,
+        required: true
     },
     bookingNumber: {
         type: String,
