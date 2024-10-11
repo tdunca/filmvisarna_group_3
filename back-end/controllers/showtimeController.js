@@ -4,48 +4,6 @@ import Hall from '../models/Hall.js';
 import Seat from '../models/Seat.js';
 
 // Hjälpfunktion för att kontrollera tidskonflikter
-// const checkTimeConflict = async (hallId, date, time, duration, excludeShowtimeId = null) => {
-//   const targetDate = new Date(date);
-//   const [hours, minutes] = time.split(':').map(Number);
-//   const startTime = new Date(targetDate);
-//   startTime.setHours(hours, minutes, 0, 0);
-  
-//   const endTime = new Date(startTime);
-//   endTime.setMinutes(endTime.getMinutes() + duration + 30); // Lägg till 30 min för städning
-
-//   const conflictingShowtime = await Showtime.findOne({
-//     hall: hallId,
-//     date: targetDate,
-//     _id: { $ne: excludeShowtimeId },
-//     $or: [
-//       {
-//         $and: [
-//           { time: { $lte: time } },
-//           {
-//             $expr: {
-//               $gt: {
-//                 $add: [
-//                   { $multiply: [{ $toInt: { $substr: ['$time', 0, 2] } }, 60] },
-//                   { $toInt: { $substr: ['$time', 3, 2] } },
-//                   '$movie.length',
-//                   30 // Städtid
-//                 ]
-//               }
-//             }
-//           }
-//         ]
-//       },
-//       {
-//         time: {
-//           $gte: time,
-//           $lt: endTime.toTimeString().substring(0, 5)
-//         }
-//       }
-//     ]
-//   }).populate('movie');
-
-//   return conflictingShowtime;
-// };
 const checkTimeConflict = async (hallId, date, time, duration, excludeShowtimeId = null) => {
   const targetDate = new Date(date);
   const [hours, minutes] = time.split(':').map(Number);
