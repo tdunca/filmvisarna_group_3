@@ -123,11 +123,14 @@ export const createBooking = async (req, res) => {
       }
     });
 
+     // Add booking to user bookings
+    user.bookings.push(booking._id);
+
     // Save everything
     await Promise.all([
       booking.save(),
       showtime.save(),
-      user.bookings.push(bookingNumber)
+      user.save()
     ]);
 
     // Send booking confirmation email
