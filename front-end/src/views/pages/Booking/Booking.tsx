@@ -1,9 +1,13 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import BookingPage from '../../../components/BookingPage/BookingPage';
 
 const Booking: React.FC = () => {
+  const { showtimeId } = useParams();
+
   return (
     <div>
-      <h1>Booking Page</h1>
+      <BookingPage showtimeId={showtimeId} />
     </div>
   );
 };

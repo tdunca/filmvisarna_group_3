@@ -14,6 +14,7 @@ const Main: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/booking" element={<Booking />} />
+        <Route path="/booking/:showtimeId" element={<Booking />} />
         <Route path="/movie-info" element={<MovieInfo />} />
         <Route path="/movie-info/:id" element={<MovieInfo />} />
         <Route path="/about-us" element={<About />} />
