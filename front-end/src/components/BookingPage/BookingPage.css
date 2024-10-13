@@ -22,16 +22,15 @@
 
 .seat-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
 .seat-button {
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
   background-color: #f0f0f0;
+  border: 1px solid #ccc;
   cursor: pointer;
 }
 
@@ -84,4 +83,65 @@
 .alert-error {
   background-color: #f8d7da;
   color: #721c24;
+}
+
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.seat-button {
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.seat-button.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+.seat-button.unavailable {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.contact-info,
+.ticket-counts,
+.age-confirmation {
+  margin: 20px 0;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.book-button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.book-button:hover {
+  background-color: #218838;
 }

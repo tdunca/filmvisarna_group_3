@@ -29,5 +29,5 @@ userRouter.get("/info", authUser, getUserInfo);
 userRouter.get('/booking/:showtimeId', authUser, getAvailableSeats);
 userRouter.post('/booking/:showtimeId', authUser, createBooking);
 
-userRouter.get('/showtime/:showtimeId/seats', getAvailableSeats);
+// userRouter.get('/showtime/:showtimeId/seats', getAvailableSeats);
 export default userRouter;
