@@ -68,8 +68,13 @@ export const createBooking = async (req, res) => {
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: email,
-        subject: 'Your Cinema Account Credentials',
-        text: `Welcome! Your temporary password is: ${tempPassword}`
+        subject: 'Dina inloggningsuppgifter till MonsterBio!',
+        html: `
+        <h2>Välkommen till MonsterBio!</h2>
+        <p>Du kan logga in på MonsterBio för att hantera dina biljettbokningar.</p>
+        <p>Här är dina inloggninguppgifer:</p>
+        <p>Anändarnamn: ${user.username} </p>
+        <p>Lösenord: ${tempPassword}</p>`
       });
     }
 
@@ -130,7 +135,7 @@ export const createBooking = async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: 'Your Cinema Booking Confirmation',
+      subject: 'Din bokningsbekräftelse från MonsterBio',
       html: emailContent
     });
 
@@ -158,21 +163,21 @@ const generateBookingEmail = async (booking, showtime, user) => {
   ).join('<br>');
   
   return `
-    <h2>Booking Confirmation</h2>
-    <p>Booking Number: ${booking.bookingNumber}</p>
-    <p>Movie: ${movie.title}</p>
-    <p>Date: ${new Date(showtime.date).toLocaleDateString()}</p>
-    <p>Time: ${showtime.time}</p>
-    <p>Hall: ${hall.hallName}</p>
-    <p>Seats: ${seats.map(seat => `Row ${seat.rowNumber} Seat ${seat.seatNumber}`).join(', ')}</p>
-    <p>Total Seats: ${seats.length}</p>
+    <h2>Bokningsbekräftelse</h2>
+    <p>Bokningsnummer: ${booking.bookingNumber}</p>
+    <p>Film: ${movie.title}</p>
+    <p>Datum: ${new Date(showtime.date).toLocaleDateString()}</p>
+    <p>Tid: ${showtime.time}</p>
+    <p>Salong: ${hall.hallName}</p>
+    <p>Säten: ${seats.map(seat => `Rad ${seat.rowNumber} Säte ${seat.seatNumber}`).join(', ')}</p>
+    <p>Antal säten: ${seats.length}</p>
     <hr>
-    <h3>Tickets:</h3>
+    <h3>Biljetter:</h3>
     <p>${ticketDetails}</p>
-    <p>Total Amount: ${booking.totalAmount} kr</p>
+    <p>Att betala: ${booking.totalAmount} kr</p>
     <hr>
-    <p>Please arrive at least 15 minutes before the show.</p>
-    <p>Your booking can be viewed online using your email and booking number.</p>
+    <p>Var vänlig och kom 15 minuter innan visningen börjar.</p>
+    <p>Du kan logga in på MonsterBio för att se din bokningsinormation.</p>
   `;
 };
 
