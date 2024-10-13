@@ -57,7 +57,7 @@ const MovieCollectionSection: React.FC = () => {
 			<Button className="sortingButton" text="Alla Filmer" onClick={() => handleFilter(null, null)} />
         	<Button className="sortingButton" text="Barn & Familj" onClick={() => handleFilter('genre', 'Family')} />
         	<Button className="smallButton" text="Senaste" onClick={() => handleFilter('year', '2024')} />
-			<Button className="sortingButton" text="Populärast" onClick={() => handleFilter('genre', 'Classics')} />
+			{/* <Button className="sortingButton" text="Populärast" onClick={() => handleFilter('genre', 'Classics')} /> */}
 			<Button className="sortingButton" text="Klassiker" onClick={() => handleFilter('genre', 'Classics')} />
 
 		{filteredMovies.map((movie) => (
