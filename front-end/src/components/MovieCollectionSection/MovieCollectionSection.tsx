@@ -35,8 +35,8 @@ const MovieCollectionSection: React.FC = () => {
     fetchMovies();
   }, []);
 
-//    if (loading) return <div>Loading...</div>;
-//    if (error) return <div>Error: {error}</div>;
+     if (loading) return <div>Loading...</div>;
+     if (error) return <div>Error: {error}</div>;
 
  const handleFilter = (field: string | null, value: string | null) => {
     setFilterField(field);
