@@ -211,44 +211,60 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
 
   return (
     <div className="container">
-      <div className="card">
+      <div className="booking-information">
 
         {/* Section 1: Showtime Info */}
-        <div className="card-header">
+        <div className="booking-information-header">
+          <div className="booking-information-header__poster">
+            <img src={movie?.poster} alt={movie?.title} />
+          </div>
+          <div className="booking-information-header__top">
           <h1>{movie?.title}</h1>
-          <p>Language: {movie?.language}, Subtitles: {movie?.subtitles}</p>
-          <p>Length: {movie?.length} minutes</p>
-          <p>Genre: {movie?.genre.join(', ')}</p>
-          <p>{showtime && new Date(showtime.date).toLocaleDateString()} - {showtime?.time}</p>
-          <p>Hall: {showtime?.hall.hallName}</p>
+            <p>Tal: {movie?.language}, Undertexter: {movie?.subtitles}</p>
+            <p>Genre: {movie?.genre.join(', ')}</p>
+            <p>Speltid: {movie?.length} minuter</p>
+          </div>
+          <div className="booking-information-header__bottom">
+            <p>Datum: {showtime && new Date(showtime.date).toLocaleDateString()}</p>
+            <p>Tid: {showtime?.time}</p>
+            <p>Salong: {showtime?.hall.hallName}</p>
+          </div>
         </div>
 
         {/* Section 2: Ticket Selection */}
         <div className="ticket-counts">
-          <h3>Ticket Counts</h3>
-          <div>
-            <label>Adults: </label>
+          <h3>Välj biljetter</h3>
+          <div className="ticket-counts__tickets">
+            <div className="ticket-counts__tickets__ticket">
+              <label>Vuxen: </label>
+              <div className="ticket-counts__tickets__ticket__button-container">
             <button onClick={() => setTicketCounts((prev) => ({ ...prev, adult: Math.max(0, prev.adult - 1) }))}>-</button>
             <span>{ticketCounts.adult}</span>
             <button onClick={() => setTicketCounts((prev) => ({ ...prev, adult: prev.adult + 1 }))}>+</button>
-          </div>
-          <div>
-            <label>Children: </label>
+              </div>
+            </div>
+          <div className="ticket-counts__tickets__ticket">
+              <label>Barn: </label>
+              <div className="ticket-counts__tickets__ticket__button-container">
             <button onClick={() => setTicketCounts((prev) => ({ ...prev, child: Math.max(0, prev.child - 1) }))}>-</button>
             <span>{ticketCounts.child}</span>
             <button onClick={() => setTicketCounts((prev) => ({ ...prev, child: prev.child + 1 }))}>+</button>
-          </div>
-          <div>
-            <label>Seniors: </label>
+              </div>
+              </div>
+          <div className="ticket-counts__tickets__ticket">
+              <label>Pensionär: </label>
+              <div className="ticket-counts__tickets__ticket__button-container">
             <button onClick={() => setTicketCounts((prev) => ({ ...prev, senior: Math.max(0, prev.senior - 1) }))}>-</button>
             <span>{ticketCounts.senior}</span>
             <button onClick={() => setTicketCounts((prev) => ({ ...prev, senior: prev.senior + 1 }))}>+</button>
-          </div>
+            </div>
+            </div>
+            </div>
         </div>
 
-        <div className="card-content">
+        <div className="booking-information-content">
           {/* Section 3: Seat Selection */}
-          <h3>Select Seats</h3>
+          <h3>Välj platser</h3>
           <div className="seat-grid">
             {showtime?.hall.seatsPerRow.map((seatsInRow, rowIndex) => (
               <div className="seat-row" key={rowIndex}>
@@ -274,7 +290,8 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
 
           {/* Section 4: Contact Information */}
           <div className="contact-info">
-            <h3>Contact Information</h3>
+            <h3>Biljettleverans</h3>
+            <p>För att boka biljetter, ange din e-postadress.</p>
             <input
               type="email"
               placeholder="Enter your email"
@@ -292,14 +309,14 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
                 checked={ageConfirmation}
                 onChange={() => setAgeConfirmation(!ageConfirmation)}
               />
-              I confirm that I am at least 18 years old
+              Jag är medveten om filmer kan ha åldersgränser. Barn som har fyllt 11 år får medfölja i vuxens sällskap. Ålder ska kunna styrkas med giltig legitimation. 
             </label>
           </div>
 
-          <h3>Total Amount: {totalAmount} SEK</h3>
+          <h3>Att betala: {totalAmount} SEK</h3>
 
           <button className="book-button" onClick={handleBooking}>
-            Confirm Booking
+            Genomför bokning
           </button>
         </div>
       </div>
@@ -307,17 +324,18 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h2>Booking Confirmation</h2>
+            <h2>Bokningsbekräftelse</h2>
             {bookingStatus?.success ? (
               <>
-                <p>Your booking was successful!</p>
-                <p>Booking Number: {bookingStatus.bookingNumber}</p>
-                <button onClick={closeModal}>Close</button>
+                <p>Bokningen genomfördes</p>
+                <p>Ditt bokningsnummer: {bookingStatus.bookingNumber}</p>
+                <p>Information har skickats till angiven e-postadress</p>
+                <button onClick={closeModal}>Stäng</button>
               </>
             ) : (
               <>
                 <p>{bookingStatus?.message}</p>
-                <button onClick={closeModal}>Close</button>
+                <button onClick={closeModal}>Stäng</button>
               </>
             )}
           </div>

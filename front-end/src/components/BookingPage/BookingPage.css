@@ -4,29 +4,74 @@
   padding: 20px;
 }
 
-.card {
+.booking-information {
   border: 1px solid #ddd;
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 8px;
 }
 
-.card-header h1 {
-  font-size: 24px;
+.booking-information-header {
+  position: relative;
+  border-radius: 5px 5px 0 0;
+  background: linear-gradient(to bottom, #045685, #000F26 20%);
+  height: 350px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+}
+
+.booking-information-header h1 {
+  font-size: 28px;
   font-weight: bold;
+  color: white;
+  margin-bottom: 20px;
 }
 
-.card-header p {
-  color: #666;
+.booking-information-header p {
+  color: white;
 }
 
-.seat-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  margin: 20px 0;
+.booking-information-header__top {
+  position: relative;
+  margin-bottom: 20px;
 }
 
+.booking-information-header__top p {
+  font-size: 14px;
+}
+.booking-information-header__top p:nth-child(2) {
+  font-size: 13px;
+}
+.booking-information-header__top p:nth-child(3) {
+  font-size: 13px;
+  position: absolute;
+  top: 48px;
+  right: 250px;
+}
+.booking-information-header__poster {
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  border-radius: 5px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.booking-information-header__poster img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  /* margin-right: 20px; */
+  border: 3px solid;
+  /* Tjockleken på kanten */
+  border-image: 
+    linear-gradient(to bottom, #000F26, #045685) 1
+}
+
+.booking-information-header__bottom p {
+  font-size: 24px;
+}
 .seat-button {
   padding: 10px;
   background-color: #f0f0f0;
@@ -110,7 +155,48 @@
 .contact-info,
 .ticket-counts,
 .age-confirmation {
-  margin: 20px 0;
+  margin: 0;
+}
+
+.ticket-counts {
+  background: #000F26;
+  color: #FCAF00;
+  border: 3px solid #FCAF00;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+}
+
+.ticket-counts__tickets {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: 0;
+}
+
+.ticket-counts__tickets__ticket {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ticket-counts__tickets__ticket__button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-right: 10px;
+}
+
+.ticket-counts__tickets__ticket__button-container button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FCAF00;
+  border: 3px solid #000F26;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 .modal {
