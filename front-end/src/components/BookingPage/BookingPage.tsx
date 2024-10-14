@@ -100,6 +100,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
     }
   };
 
+  //Jag hade problem med att få ut information om filmen från showtime objektet (vet inte varför) så denna hämtar och skapar direkt från filmobjektet
   const fetchMovieDetails = async (movieId: string) => {
     try {
       const response = await fetch(`/api/movie/${movieId}`);
@@ -233,31 +234,31 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
 
         {/* Section 2: Ticket Selection */}
         <div className="ticket-counts">
-          <h3>Välj biljetter</h3>
+          {/* <h3>Välj biljetter</h3> */}
           <div className="ticket-counts__tickets">
             <div className="ticket-counts__tickets__ticket">
               <label>Vuxen: </label>
               <div className="ticket-counts__tickets__ticket__button-container">
-            <button onClick={() => setTicketCounts((prev) => ({ ...prev, adult: Math.max(0, prev.adult - 1) }))}>-</button>
-            <span>{ticketCounts.adult}</span>
-            <button onClick={() => setTicketCounts((prev) => ({ ...prev, adult: prev.adult + 1 }))}>+</button>
+                <button onClick={() => setTicketCounts((prev) => ({ ...prev, adult: Math.max(0, prev.adult - 1) }))}>-</button>
+                <span>{ticketCounts.adult}</span>
+                <button onClick={() => setTicketCounts((prev) => ({ ...prev, adult: prev.adult + 1 }))}>+</button>
               </div>
             </div>
           <div className="ticket-counts__tickets__ticket">
               <label>Barn: </label>
               <div className="ticket-counts__tickets__ticket__button-container">
-            <button onClick={() => setTicketCounts((prev) => ({ ...prev, child: Math.max(0, prev.child - 1) }))}>-</button>
-            <span>{ticketCounts.child}</span>
-            <button onClick={() => setTicketCounts((prev) => ({ ...prev, child: prev.child + 1 }))}>+</button>
+                <button onClick={() => setTicketCounts((prev) => ({ ...prev, child: Math.max(0, prev.child - 1) }))}>-</button>
+                <span>{ticketCounts.child}</span>
+                <button onClick={() => setTicketCounts((prev) => ({ ...prev, child: prev.child + 1 }))}>+</button>
               </div>
               </div>
           <div className="ticket-counts__tickets__ticket">
               <label>Pensionär: </label>
               <div className="ticket-counts__tickets__ticket__button-container">
-            <button onClick={() => setTicketCounts((prev) => ({ ...prev, senior: Math.max(0, prev.senior - 1) }))}>-</button>
-            <span>{ticketCounts.senior}</span>
-            <button onClick={() => setTicketCounts((prev) => ({ ...prev, senior: prev.senior + 1 }))}>+</button>
-            </div>
+                <button onClick={() => setTicketCounts((prev) => ({ ...prev, senior: Math.max(0, prev.senior - 1) }))}>-</button>
+                <span>{ticketCounts.senior}</span>
+                <button onClick={() => setTicketCounts((prev) => ({ ...prev, senior: prev.senior + 1 }))}>+</button>
+              </div>
             </div>
             </div>
         </div>
@@ -280,7 +281,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
                       className={`seat-button ${seat && !seat.isBooked ? (selectedSeats.includes(seat._id) ? 'selected' : '') : 'unavailable'}`}
                       disabled={seat?.isBooked || !seat}
                     >
-                      {`R${rowIndex + 1}S${reverseSeatIndex}`}
+                      {`${seat?.seat.seatNumber}`}
                     </button>
                   );
                 })}

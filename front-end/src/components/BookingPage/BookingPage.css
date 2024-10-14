@@ -42,6 +42,7 @@
 }
 .booking-information-header__top p:nth-child(2) {
   font-size: 13px;
+  margin-bottom: 10px;
 }
 .booking-information-header__top p:nth-child(3) {
   font-size: 13px;
@@ -69,9 +70,19 @@
     linear-gradient(to bottom, #000F26, #045685) 1
 }
 
+.booking-information-header__bottom {
+  padding-top: 20px;
+}
+
 .booking-information-header__bottom p {
   font-size: 24px;
+  margin-bottom: 20px;
 }
+
+.booking-information-content {
+  background: #000F26;
+}
+
 .seat-button {
   padding: 10px;
   background-color: #f0f0f0;
@@ -159,7 +170,7 @@
 }
 
 .ticket-counts {
-  background: #000F26;
+  background: linear-gradient(to left, #000F26, #045685, #000F26);
   color: #FCAF00;
   border: 3px solid #FCAF00;
   padding-top: 20px;
@@ -178,6 +189,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.ticket-counts__tickets__ticket label {
+  font-size: 28px;
 }
 
 .ticket-counts__tickets__ticket__button-container {
