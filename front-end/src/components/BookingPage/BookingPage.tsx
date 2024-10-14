@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './BookingPage.css';
+import dateIcon from '../../assets/icons/calendar_today_35dp_FCAF00_FILL0_wght400_GRAD0_opsz40.png';
+import timeIcon from '../../assets/icons/schedule_35dp_FCAF00_FILL0_wght400_GRAD0_opsz40.png';
+import hallIcon from '../../assets/icons/icon-cinema-fatter.png';
 
 interface Seat {
   seat: {
@@ -75,7 +78,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
     // Calculate total amount based on ticket counts
     const adultPrice = 140;
     const childPrice = 80;
-    const seniorPrice =120;
+    const seniorPrice = 120;
     const total = (ticketCounts.adult * adultPrice) + (ticketCounts.child * childPrice) + (ticketCounts.senior * seniorPrice);
     setTotalAmount(total);
   }, [ticketCounts]);
@@ -226,9 +229,9 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
             <p>Speltid: {movie?.length} minuter</p>
           </div>
           <div className="booking-information-header__bottom">
-            <p>Datum: {showtime && new Date(showtime.date).toLocaleDateString()}</p>
-            <p>Tid: {showtime?.time}</p>
-            <p>Salong: {showtime?.hall.hallName}</p>
+            <p><img src={dateIcon} alt="date" />Datum: {showtime && new Date(showtime.date).toLocaleDateString()}</p>
+            <p><img src={timeIcon} alt="time" />kl {showtime?.time}</p>
+            <p><img src={hallIcon} alt="hall" />Salong: {showtime?.hall.hallName}</p>
           </div>
         </div>
 
@@ -237,7 +240,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
           {/* <h3>Välj biljetter</h3> */}
           <div className="ticket-counts__tickets">
             <div className="ticket-counts__tickets__ticket">
-              <label>Vuxen: </label>
+              <label>Vuxen </label>
               <div className="ticket-counts__tickets__ticket__button-container">
                 <button onClick={() => setTicketCounts((prev) => ({ ...prev, adult: Math.max(0, prev.adult - 1) }))}>-</button>
                 <span>{ticketCounts.adult}</span>
@@ -245,7 +248,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
               </div>
             </div>
           <div className="ticket-counts__tickets__ticket">
-              <label>Barn: </label>
+              <label>Barn </label>
               <div className="ticket-counts__tickets__ticket__button-container">
                 <button onClick={() => setTicketCounts((prev) => ({ ...prev, child: Math.max(0, prev.child - 1) }))}>-</button>
                 <span>{ticketCounts.child}</span>
@@ -253,7 +256,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
               </div>
               </div>
           <div className="ticket-counts__tickets__ticket">
-              <label>Pensionär: </label>
+              <label>Pensionär </label>
               <div className="ticket-counts__tickets__ticket__button-container">
                 <button onClick={() => setTicketCounts((prev) => ({ ...prev, senior: Math.max(0, prev.senior - 1) }))}>-</button>
                 <span>{ticketCounts.senior}</span>
@@ -304,21 +307,29 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
 
           {/* Section 5: Age Confirmation */}
           <div className="age-confirmation">
-            <label>
+            <div className="age-confirmation-inner-box">
+              <label>
+                <div className="checkbox-container">
               <input
                 type="checkbox"
                 checked={ageConfirmation}
                 onChange={() => setAgeConfirmation(!ageConfirmation)}
-              />
-              Jag är medveten om filmer kan ha åldersgränser. Barn som har fyllt 11 år får medfölja i vuxens sällskap. Ålder ska kunna styrkas med giltig legitimation. 
-            </label>
+                  />
+                </div>
+                <div className="checkbox-label">
+                  Jag är medveten om filmer kan ha åldersgränser. Barn som har fyllt 11 år får medfölja i vuxens sällskap. Ålder ska kunna styrkas med giltig legitimation. 
+                  </div>
+              </label>
+            </div>
+          </div>
+          <div className="book-button-container">
+              <button className="book-button" onClick={handleBooking}>
+                <h1>Köp biljett!</h1>
+              </button>
           </div>
 
-          <h3>Att betala: {totalAmount} SEK</h3>
+          
 
-          <button className="book-button" onClick={handleBooking}>
-            Genomför bokning
-          </button>
         </div>
       </div>
 
@@ -342,6 +353,17 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
           </div>
         </div>
       )}
+      {/* Section 6: Total Amount - Aside */}
+      <div className="total-amount-aside"> 
+          <div className="total-amount">
+            <h3>Ordinarie: {ticketCounts.adult} st {ticketCounts.adult * 140} kr</h3>
+            <h3>Barn: {ticketCounts.child} st {ticketCounts.child * 80} kr</h3>
+            <h3>Pensionär: {ticketCounts.senior} st {ticketCounts.senior * 120} kr</h3>
+            <h3> Ordinarie pris {(ticketCounts.adult + ticketCounts.child + ticketCounts.senior) * 140} kr</h3>
+            <h3> Totalt prisavdrag {((ticketCounts.adult + ticketCounts.child + ticketCounts.senior) * 140) - Number(totalAmount)} </h3>
+            <h2>Att betala: {totalAmount} SEK</h2>
+        </div>
+        </div>
     </div>
   );
 };
