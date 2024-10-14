@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './BookingPage.css';
 
 interface Seat {
   seat: {
@@ -38,6 +39,7 @@ interface Showtime {
   hall: {
     _id: string;
     hallName: string;
+    seatsPerRow: number[];
   };
   date: string;
   time: string;
@@ -127,10 +129,17 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
   };
 
   const handleSeatClick = (seatId: string) => {
-    setSelectedSeats((prev) =>
-      prev.includes(seatId) ? prev.filter((id) => id !== seatId) : [...prev, seatId]
-    );
-  };
+  const totalTickets = ticketCounts.adult + ticketCounts.child + ticketCounts.senior;
+  if (selectedSeats.includes(seatId)) {
+    // If the seat is already selected, remove it
+    setSelectedSeats((prev) => prev.filter((id) => id !== seatId));
+  } else if (selectedSeats.length < totalTickets) {
+    // Add the seat only if the number of selected seats is less than the total ticket count
+    setSelectedSeats((prev) => [...prev, seatId]);
+  } else {
+    alert('You have selected the maximum number of seats allowed.');
+  }
+};
 
   const handleBooking = async () => {
   if (!email || selectedSeats.length === 0 || !ageConfirmation) {
@@ -145,7 +154,11 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
       { type: 'child', quantity: ticketCounts.child },
     ];
 
+     // Filter out only the selected seats
+    const selectedSeatObjects = seats.filter(seat => selectedSeats.includes(seat._id));
+
     const response = await fetch('/api/user/bookings', {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -154,10 +167,10 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
         movieId: showtime?.movie._id,
         hallId: showtime?.hall._id,
         showtimeId,
-        selectedSeats,
+        selectedSeats: selectedSeatObjects.map(seat => seat.seat._id),
         email,
-        tickets, // Skickar biljetter i rätt format
-        totalAmount, // Total summa för bokningen
+        tickets,
+        totalAmount,
       }),
     });
 
@@ -199,6 +212,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
   return (
     <div className="container">
       <div className="card">
+
         {/* Section 1: Showtime Info */}
         <div className="card-header">
           <h1>{movie?.title}</h1>
@@ -209,6 +223,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
           <p>Hall: {showtime?.hall.hallName}</p>
         </div>
 
+        {/* Section 2: Ticket Selection */}
         <div className="ticket-counts">
           <h3>Ticket Counts</h3>
           <div>
@@ -232,20 +247,32 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
         </div>
 
         <div className="card-content">
+          {/* Section 3: Seat Selection */}
           <h3>Select Seats</h3>
           <div className="seat-grid">
-            {seats.map((seat) => (
-              <button
-                key={seat._id}
-                onClick={() => !seat.isBooked && handleSeatClick(seat._id)}
-                className={`seat-button ${!seat.isBooked ? (selectedSeats.includes(seat._id) ? 'selected' : '') : 'unavailable'}`}
-                disabled={seat.isBooked}
-              >
-                {`R${seat.seat.rowNumber}S${seat.seat.seatNumber}`}
-              </button>
+            {showtime?.hall.seatsPerRow.map((seatsInRow, rowIndex) => (
+              <div className="seat-row" key={rowIndex}>
+                {Array.from({ length: seatsInRow }).map((_, seatIndex) => {
+                  const reverseSeatIndex = seatsInRow - seatIndex; // Räknar ner istället för upp
+                  const seat = seats.find(
+                    (s) => s.seat.rowNumber === rowIndex + 1 && parseInt(s.seat.seatNumber) === reverseSeatIndex
+                  );
+                  return (
+                    <button
+                      key={seat?._id || `${rowIndex}-${reverseSeatIndex}`}
+                      onClick={() => seat && !seat.isBooked && handleSeatClick(seat._id)}
+                      className={`seat-button ${seat && !seat.isBooked ? (selectedSeats.includes(seat._id) ? 'selected' : '') : 'unavailable'}`}
+                      disabled={seat?.isBooked || !seat}
+                    >
+                      {`R${rowIndex + 1}S${reverseSeatIndex}`}
+                    </button>
+                  );
+                })}
+              </div>
             ))}
           </div>
 
+          {/* Section 4: Contact Information */}
           <div className="contact-info">
             <h3>Contact Information</h3>
             <input
@@ -257,6 +284,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
             />
           </div>
 
+          {/* Section 5: Age Confirmation */}
           <div className="age-confirmation">
             <label>
               <input

@@ -44,10 +44,6 @@
   cursor: not-allowed;
 }
 
-.contact-info {
-  margin-bottom: 20px;
-}
-
 .email-input {
   padding: 8px;
   border: 1px solid #ddd;
@@ -86,7 +82,9 @@
 }
 
 .seat-grid {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   margin: 20px 0;
@@ -144,4 +142,11 @@
 
 .book-button:hover {
   background-color: #218838;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
 }

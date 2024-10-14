@@ -1,6 +1,7 @@
 main {
       margin-top: 80px;
       min-height: calc(100vh - (80px + 300px));
+      height: fit-content;
       justify-content: center;
       background: blue;
       width: 100%;
