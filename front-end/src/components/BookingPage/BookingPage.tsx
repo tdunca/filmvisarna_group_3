@@ -8,7 +8,7 @@ import hallIcon from '../../assets/icons/icon-cinema-fatter.png';
 interface Seat {
   seat: {
     _id: string;
-    seatNumber: string;
+    seatNumber: number;
     rowNumber: number;
     hall: string;
   };
@@ -147,6 +147,17 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
   }
 };
 
+  const groupSeatsByRow = (seats: Seat[]) => {
+    return seats.reduce((acc, seat) => {
+      const rowNumber = seat.seat.rowNumber;
+      if (!acc[rowNumber]) {
+        acc[rowNumber] = [];
+      }
+      acc[rowNumber].push(seat);
+      return acc;
+    }, {} as Record<number, Seat[]>);
+  };
+
   const handleBooking = async () => {
   if (!email || selectedSeats.length === 0 || !ageConfirmation) {
     setError('Please select seats, enter your email, and confirm age');
@@ -268,31 +279,27 @@ const BookingPage: React.FC<BookingPageProps> = ({ showtimeId }) => {
             </div>
         </div>
 
+        {/* Section 3: Seat Selection */}
         <div className="booking-information-content">
-          {/* Section 3: Seat Selection */}
-          <h3>Välj platser</h3>
-          <div className="seat-grid">
-            {showtime?.hall.seatsPerRow.map((seatsInRow, rowIndex) => (
-              <div className="seat-row" key={rowIndex}>
-                {Array.from({ length: seatsInRow }).map((_, seatIndex) => {
-                  const reverseSeatIndex = seatsInRow - seatIndex; // Räknar ner istället för upp
-                  const seat = seats.find(
-                    (s) => s.seat.rowNumber === rowIndex + 1 && parseInt(s.seat.seatNumber) === reverseSeatIndex
-                  );
-                  return (
-                    <button
-                      key={seat?._id || `${rowIndex}-${reverseSeatIndex}`}
-                      onClick={() => seat && !seat.isBooked && handleSeatClick(seat._id)}
-                      className={`seat-button ${seat && !seat.isBooked ? (selectedSeats.includes(seat._id) ? 'selected' : '') : 'unavailable'}`}
-                      disabled={seat?.isBooked || !seat}
-                    >
-                      {`${seat?.seat.seatNumber}`}
-                    </button>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
+        <h3>Välj platser</h3>
+        <div className="seat-grid">
+          {Object.entries(groupSeatsByRow(seats)).map(([rowNumber, rowSeats]) => (
+            <div className="seat-row" key={rowNumber}>
+              {rowSeats
+                .sort((a, b) => b.seat.seatNumber - a.seat.seatNumber) // Sort seats in descending order
+                .map((seat) => (
+                  <button
+                    key={seat._id}
+                    onClick={() => !seat.isBooked && handleSeatClick(seat._id)}
+                    className={`seat-button ${seat.isBooked ? 'unavailable' : (selectedSeats.includes(seat._id) ? 'selected' : '')}`}
+                    disabled={seat.isBooked}
+                  >
+                    {seat.seat.seatNumber}
+                  </button>
+                ))}
+            </div>
+          ))}
+        </div>
 
           {/* Section 4: Contact Information */}
           <div className="contact-info">

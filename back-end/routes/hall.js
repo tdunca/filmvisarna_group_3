@@ -3,7 +3,7 @@ import express from "express";
 import Seat from "../models/Seat.js";
 import Showtime from "../models/Showtime.js";
 import Movie from "../models/Movie.js";
-import { createHall, deleteHalls, getHallById, getHalls, getSeatInfo, getSeatsOfHallAtShowtime, getShowtimesOfMovieInHall } from "../controllers/hallController.js";
+import { createHall, deleteHalls, getHallById, getHalls, getSeatInfo, getSeatsOfHallAtShowtime, getShowtimesOfMovieInHall, patchSeats } from "../controllers/hallController.js";
 const hallrouter = express.Router();
 
 // Create a new hall
@@ -31,4 +31,8 @@ hallrouter.get("/:hallId/showtime/:showtime", getSeatsOfHallAtShowtime);
 
 // get a seat info
 hallrouter.get("/seat/:id", getSeatInfo)
+
+//pathc seats
+hallrouter.patch('/patch-seats', patchSeats);
+
 export default hallrouter;
