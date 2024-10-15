@@ -31,6 +31,8 @@ interface Movie {
   actors: string[];
   poster: string;
   trailer: string;
+  ageRestriction: number;
+  imdbRating: number;
 }
 
 interface Showtime {
