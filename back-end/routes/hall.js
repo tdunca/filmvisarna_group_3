@@ -19,7 +19,7 @@ hallrouter.get("/:id", getHallById);
 
 // get all showtimes of a movie in a hall
 // /api/hall/:hallId/showtimes/:movieId
-hallrouter.get("/:hallId/showtimes/:movieId", getShowtimesOfMovieInHall);
+// hallrouter.get("/:hallId/showtimes/:movieId", getShowtimesOfMovieInHall); //NOT IN USE
 
 // delete all halls and their seats and showtimes
 // /api/hall
@@ -27,12 +27,12 @@ hallrouter.delete("/", deleteHalls);
 
 // get all seats of a hall at a specific showtime
 // /api/hall/:hallId/showtime/:showtime
-hallrouter.get("/:hallId/showtime/:showtime", getSeatsOfHallAtShowtime);
+// hallrouter.get("/:hallId/showtime/:showtime", getSeatsOfHallAtShowtime); // NOT IN USE -- MAYBE LATER
 
 // get a seat info
 hallrouter.get("/seat/:id", getSeatInfo)
 
 //pathc seats
-hallrouter.patch('/patch-seats', patchSeats);
+// hallrouter.patch('/patch-seats', patchSeats); // NOT IN USE
 
 export default hallrouter;
