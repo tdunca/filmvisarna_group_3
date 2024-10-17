@@ -4,18 +4,25 @@ import './Footer.css';
 
 const Footer: React.FC = () => {
   return (
-    <footer>
-      <h1>Cinema Website Footer</h1>
-      <div className="site-links">
-        <Link to="/about-us">Om oss</Link>
-        <Link to="/about-cinemas">Våra biografer</Link>
-        <Link to="/contact-us">Kontakta oss</Link>
+    <footer className="footer">
+      <div className="container-fluid">
+        <div className="row text-light">
+          <div className="col-md-3">
+            <h5>Om oss</h5>
+            <ul className="footer-omoss">
+              <li>
+                <Link to="/about-us">Om oss</Link>
+              </li>
+              <li>
+                <Link to="/contact-us">Kontakta oss</Link>
+              </li>
+              <li>
+                <Link to="/about-cinemas">Våra biografer</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div className="opening-hours"></div>
-      <div className="address"></div>
-      <div className="logo-footer"></div>
-      <div className="copyright"></div>
-      <div className="social-media-links"></div>
     </footer>
   );
 };
