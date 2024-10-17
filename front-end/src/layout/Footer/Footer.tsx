@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Footer.css';
+// import './Footer.css';
+import Logo from '../../components/Logo/Logo';
+import './Footer.scss';
 
 const Footer: React.FC = () => {
   return (
@@ -51,6 +53,12 @@ const Footer: React.FC = () => {
               <a title="youtube" href="#">
                 <i className="bi bi-youtube"></i>
               </a>
+            </div>
+          </div>
+
+          <div className="row justify-content-center mt-4">
+            <div className="col-md-12 text-center">
+              <Logo />
             </div>
           </div>
         </div>
