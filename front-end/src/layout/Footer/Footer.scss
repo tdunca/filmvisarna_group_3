@@ -1,4 +1,40 @@
-.logo-footer {
-  max-width: 120px;
-  margin-top: 20px;
+.footer {
+  background-color: #05132b; // Dark background
+  padding: 20px 0;
+  border-top: 5px solid #ffb500;
+
+  h5 {
+    color: #ffb500;
+  }
+
+  .list-unstyled {
+    padding-left: 0;
+
+    a {
+      color: #ffb500;
+      text-decoration: none;
+
+      &:hover {
+        color: #ff9900;
+      }
+    }
+  }
+
+  .social-media-links {
+    a {
+      color: #ffb500;
+      font-size: 24px;
+      margin: 0 10px;
+      text-decoration: none;
+
+      &:hover {
+        color: #ff9900;
+      }
+    }
+  }
+
+  .logo-footer {
+    max-width: 20px;
+    margin-top: 20px;
+  }
 }
