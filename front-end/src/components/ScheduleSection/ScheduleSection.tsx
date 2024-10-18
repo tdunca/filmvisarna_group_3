@@ -26,7 +26,9 @@ interface ScheduleSectionProps {
 
 const ScheduleSection: React.FC<ScheduleSectionProps> = ({ date }) => {
   const [showtimes, setShowtimes] = useState<{ [key: string]: Showtime[] }>({});
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  const today = new Date().toISOString().split('T')[0];
+  const [selectedDate, setSelectedDate] = useState<string>(today);
 
   useEffect(() => {
     // Räknar ut start- och slutdatum (dagens datum och två veckor framåt)
@@ -52,28 +54,48 @@ const ScheduleSection: React.FC<ScheduleSectionProps> = ({ date }) => {
     fetchShowtimes();
   }, [date]);
 
-  // Funktion som genererar knappar för två veckor framåt
-  const dateRangeTwoWeeks = () => {
-    const buttons = [];
-    const today = new Date();
-
-    for (let i = 0; i < 14; i++) {
-      const currentDate = new Date(today);
-      currentDate.setDate(today.getDate() + i);
-
-      buttons.push(
-        <button
-          key={i}
-          className={selectedDate === currentDate.toISOString().split('T')[0] ? 'selected' : ''}
-          onClick={() => handleDateClick(currentDate)}
-        >
-          {currentDate.toLocaleDateString()}
-        </button>
-      );
-    }
-
-    return buttons;
+   // Funktion för att beräkna sluttiden baserat på starttid och längd
+  const calculateEndTime = (startTime: string, length: number) => {
+    const [hours, minutes] = startTime.split(':').map(Number);
+    const startDate = new Date();
+    startDate.setHours(hours, minutes);
+    const endDate = new Date(startDate.getTime() + length * 60000); // Längd i minuter till millisekunder
+    return endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
   };
+
+  // Funktion som genererar knappar för två veckor framåt
+  const getDayLabel = (date: Date, index: number) => {
+  const options: Intl.DateTimeFormatOptions = { weekday: 'long' };
+
+  if (index === 0) return 'Idag'; // Första datumet är alltid "Idag"
+  if (index === 1) return 'Imorgon'; // Andra datumet är alltid "Imorgon"
+
+  // Annars returnera veckodag och datum (ex: "Söndag 20/10")
+  return date.toLocaleDateString('sv-SE', options);
+};
+
+const dateRangeTwoWeeks = () => {
+  const buttons = [];
+  const today = new Date();
+
+  for (let i = 0; i < 14; i++) {
+    const currentDate = new Date(today);
+    currentDate.setDate(today.getDate() + i);
+
+    buttons.push(
+      <button
+        key={i}
+        className={selectedDate === currentDate.toISOString().split('T')[0] ? 'selected' : ''}
+        onClick={() => handleDateClick(currentDate)}
+      >
+        <p>{getDayLabel(currentDate, i)}</p>
+        <p>{currentDate.toLocaleDateString('sv-SE', { day: 'numeric', month: 'numeric' })}</p>
+      </button>
+    );
+  }
+
+  return buttons;
+};
 
   const handleDateClick = (selectedDate: Date) => {
     // Spara det valda datumet i state
@@ -98,7 +120,7 @@ const ScheduleSection: React.FC<ScheduleSectionProps> = ({ date }) => {
                 <img src={showtime.movie.poster} alt={showtime.movie.title} />
                 <div>
                   <h5>{showtime.movie.title} ({showtime.movie.year})</h5>
-                  <p>{showtime.time} - {showtime.movie.length} min</p>
+                  <p>{showtime.time} - {calculateEndTime(showtime.time, showtime.movie.length)} - {showtime.movie.length} min</p>
                   <Link to={`/booking/${showtime._id}`}>Boka</Link>
                 </div>
               </div>
