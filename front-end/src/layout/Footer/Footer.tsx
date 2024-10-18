@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // import './Footer.css';
-import Logo from '../../components/Logo/Logo';
+// import Logo from '../../components/Logo/Logo';
+import facebookIcon from '../../assets/icons/socialmedia-facebook-gul.png';
+import instagramIcon from '../../assets/icons/socialmedia-instagram-gul.png';
+import XIcon from '../../assets/icons/socialmedia-x-gul.png';
+import youtubeIcon from '../../assets/icons/socialmedia-youtube-gul.png';
+
 import './Footer.scss';
 
 const Footer: React.FC = () => {
@@ -41,17 +46,17 @@ const Footer: React.FC = () => {
           <div className="col-md-3 text-center">
             <h5>Sociala medier</h5>
             <div className="social-media-links">
-              <a title="facebook" href="#">
-                <i className="bi bi-facebook"></i>
+              <a title="facebook" href="www.facebook.com">
+                <img src={facebookIcon} width={40} alt="" />
               </a>
-              <a title="instagram" href="#">
-                <i className="bi bi-instagram"></i>
+              <a title="instagram" href="www.instagram.com">
+                <img src={instagramIcon} width={40} alt="" />
               </a>
-              <a title="twitter" href="#">
-                <i className="bi bi-twitter"></i>
+              <a title="X" href="www.x.com">
+                <img src={XIcon} width={40} alt="" />
               </a>
               <a title="youtube" href="#">
-                <i className="bi bi-youtube"></i>
+                <img src={youtubeIcon} width={40} alt="" />
               </a>
             </div>
           </div>
