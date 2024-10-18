@@ -1,12 +1,13 @@
+@import '../../sass/variables.scss';
 .footer {
-  background-color: #05132b;
+  background-color: $color-primary-dark;
   padding: 10px;
-  border: 2px solid #fcaf00;
+  border: 2px solid $color-secondary;
   border-radius: 10px;
   z-index: 1;
 
   h5 {
-    color: #fcaf00;
+    color: $color-secondary;
   }
 
   .list-unstyled {
@@ -15,7 +16,7 @@
       margin-bottom: 10px;
 
       a {
-        color: #fcaf00;
+        color: $color-secondary;
         text-decoration: none;
 
         transition: color 0.3s ease;
