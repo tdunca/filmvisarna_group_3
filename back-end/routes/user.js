@@ -11,7 +11,7 @@ const userRouter = express.Router();
 
 //Authenticated routes----------------
 // book a ticket -- NOT IN USE
-userRouter.post('/book-ticket', authUser, bookTicket); // NOT IN USE
+// userRouter.post('/book-ticket', authUser, bookTicket); // NOT IN USE
 
 // remove a ticket by booking number
 userRouter.delete('/remove-ticket/:bookingNumber', authUser, removeTicket);
@@ -32,6 +32,7 @@ userRouter.get("/info", authUser, getUserInfo);
 
 // Non-authenticated routes-------------
 userRouter.get('/booking/:showtimeId/seats', getAvailableSeats);
+// Create a booking
 userRouter.post('/bookings', createBooking); //No token needed
 
 // userRouter.get('/showtime/:showtimeId/seats', getAvailableSeats);
