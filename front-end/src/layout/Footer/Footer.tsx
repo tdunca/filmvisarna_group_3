@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // import './Footer.css';
-// import Logo from '../../components/Logo/Logo';
+import Logo from '../../assets/img/logo-text-side.png';
 import facebookIcon from '../../assets/icons/socialmedia-facebook-gul.png';
 import instagramIcon from '../../assets/icons/socialmedia-instagram-gul.png';
 import XIcon from '../../assets/icons/socialmedia-x-gul.png';
@@ -47,25 +47,25 @@ const Footer: React.FC = () => {
             <h5>Sociala medier</h5>
             <div className="social-media-links">
               <a title="facebook" href="www.facebook.com">
-                <img src={facebookIcon} width={40} alt="" />
+                <img src={facebookIcon} alt="" />
               </a>
               <a title="instagram" href="www.instagram.com">
-                <img src={instagramIcon} width={40} alt="" />
+                <img src={instagramIcon} alt="" />
               </a>
               <a title="X" href="www.x.com">
-                <img src={XIcon} width={40} alt="" />
+                <img src={XIcon} alt="" />
               </a>
               <a title="youtube" href="#">
-                <img src={youtubeIcon} width={40} alt="" />
+                <img src={youtubeIcon} alt="" />
               </a>
             </div>
           </div>
 
-          {/* <div className="row justify-content-center mt-4">
-            <div className="col-md-12 text-center">
-              <Logo />
+          <div className="row justify-content-center mt-4">
+            <div className="col-md-12">
+              <img src={Logo} width={200} alt="Logo" />
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </footer>

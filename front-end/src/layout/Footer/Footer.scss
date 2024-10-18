@@ -1,5 +1,5 @@
 .footer {
-  background-color: #05132b; // Dark background
+  background-color: #05132b;
   padding: 10px;
   border: 2px solid #fcaf00;
   border-radius: 10px;
@@ -11,32 +11,37 @@
 
   .list-unstyled {
     padding-left: 0;
+    li {
+      margin-bottom: 10px;
 
-    a {
-      color: #fcaf00;
-      text-decoration: none;
-
-      &:hover {
+      a {
         color: #fcaf00;
+        text-decoration: none;
+
+        transition: color 0.3s ease;
+
+        &:hover {
+          filter: brightness(1.3);
+        }
       }
     }
   }
 
   .social-media-links {
     a {
-      color: #fcaf00;
-      font-size: 24px;
       margin: 0 10px;
       text-decoration: none;
 
+      img {
+        width: 40px;
+        transition: filter 0.3s ease;
+      }
+
       &:hover {
-        color: #fcaf00;
+        img {
+          filter: brightness(1.3);
+        }
       }
     }
-  }
-
-  .logo-footer {
-    max-width: 20px;
-    margin-top: 20px;
   }
 }
