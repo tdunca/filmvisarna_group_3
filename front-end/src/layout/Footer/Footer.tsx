@@ -56,11 +56,11 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="row justify-content-center mt-4">
+          {/* <div className="row justify-content-center mt-4">
             <div className="col-md-12 text-center">
               <Logo />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

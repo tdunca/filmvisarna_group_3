@@ -1,7 +1,9 @@
 .footer {
   background-color: #05132b; // Dark background
   padding: 20px 0;
-  border-top: 5px solid #fcaf00;
+  border-top: 2px solid #fcaf00;
+  border-radius: 10px;
+  z-index: 1;
 
   h5 {
     color: #fcaf00;
